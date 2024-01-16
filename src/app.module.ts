@@ -19,7 +19,7 @@ import { PluginModule } from './plugin/plugin.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      ignoreEnvFile: false, // 忽视默认读取.env的文件配置
+      ignoreEnvFile: false, // 忽视默认读取.env的文件配置 false: 忽略读取; true: 读取
       isGlobal: true, // 全局注入
       load: [getConfig], // 加载配置文件
     }),
