@@ -5,9 +5,11 @@ import { LoginVo } from './vo/login.vo';
 import * as svgCaptcha from 'svg-captcha';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
+
 @Controller()
 export class LoginController {
-  constructor(private readonly loginService: LoginService) {}
+  constructor(private readonly loginService: LoginService) {
+  }
 
   @Post('login')
   async loginApi(@Body() req: LoginDto): Promise<LoginVo> {
@@ -35,6 +37,7 @@ export class LoginController {
     // session['code'] = captcha['text']; //存储验证码记录到session
     // res.set('Content-Type', 'image/svg+xml');
     // res.send(captcha['data']);
+    console.log(captcha['text']);
     return captcha;
   }
 }
