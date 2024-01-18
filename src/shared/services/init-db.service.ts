@@ -20,8 +20,11 @@ export class InitDbService {
 
   onModuleInit() {
     console.log('初始化数据库');
-    this.initData();
+    // Note: 暂时禁用 init database 的过程
+    // 因为已经有了数据了
+    // this.initData();
   }
+
 
   /**
    * @Author: 水痕
@@ -30,6 +33,7 @@ export class InitDbService {
    * @Description: 初始化账号
    * @return {*}
    */
+  // @ts-ignore
   private async initData(): Promise<void> {
     // 1.初始化商户
     const total = await this.tenantRepository.count();
