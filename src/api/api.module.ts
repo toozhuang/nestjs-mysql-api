@@ -10,6 +10,8 @@ import { ResourcesModule } from './resources/resources.module';
 import { RoleResourcesModule } from './roleResources/role.resources.module';
 import { DepartmentModule } from './department/department.module';
 import { ToshlModule } from './toshl/toshl.module';
+import { BankDepositModule } from './bank-deposit/bank-deposit.module';
+import { RecipeModule } from './recipe/recipe.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { ToshlModule } from './toshl/toshl.module';
     RoleResourcesModule,
     DepartmentModule,
     ToshlModule,
+    BankDepositModule,
+    RecipeModule,
   ],
 })
 export class ApiModule {}
