@@ -12,6 +12,7 @@ import { ResourcesEntity } from '../resources/entities/resources.entity';
 import { RoleResourcesEntity } from '../roleResources/entities/role.resources.entity';
 import { LoginDto } from './dto/login.dto';
 import { LoginAccountVo, LoginTokenDataVo, LoginVo } from './vo/login.vo';
+import { ErrorShowType } from '@src/filters/http-exception.filter';
 
 @Injectable()
 export class LoginService {
@@ -51,7 +52,11 @@ export class LoginService {
         return await this.generateToken(accountEntity);
       } else {
         throw new HttpException(
-          JSON.stringify({ message: '账号或密码错误', code: '1', showType: '1' }),
+          JSON.stringify({
+            message: '账号或密码错误',
+            code: 1,
+            showType: ErrorShowType.ERROR_MESSAGE,
+          }),
           HttpStatus.OK
         );
       }

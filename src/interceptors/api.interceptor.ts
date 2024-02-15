@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 export class ApiInterceptor implements NestInterceptor {
   // 可以直接访问的
   private readonly whiteUrlList: string[] = ['/menus/btnList', '/menus'];
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
     /**当前请求方式 */
@@ -26,7 +27,9 @@ export class ApiInterceptor implements NestInterceptor {
       .replace('/api/v1/admin', '') // 去除双//
       .replace(/\?.*/, '') // 去除最后一个
       .replace(/(\d+)$/, '*');
-    console.log(newUrl, '-------------');
+    console.log('newUrl:', newUrl, '-------------');
+    return next.handle();
+    // TODO: 暂时禁用黑白名单逻辑
     if (this.whiteUrlList.includes(newUrl)) {
       return next.handle();
     }
@@ -45,7 +48,7 @@ export class ApiInterceptor implements NestInterceptor {
       } else {
         throw new HttpException(
           JSON.stringify({ code: 10034, message: '你没权限访问' }),
-          HttpStatus.OK
+          HttpStatus.OK,
         );
       }
     }
