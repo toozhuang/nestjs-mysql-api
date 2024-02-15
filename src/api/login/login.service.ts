@@ -50,7 +50,10 @@ export class LoginService {
       if (Object.is(saltPassword, accountEntity.password)) {
         return await this.generateToken(accountEntity);
       } else {
-        throw new HttpException('账号或密码错误', HttpStatus.OK);
+        throw new HttpException(
+          JSON.stringify({ message: '账号或密码错误', code: '1', showType: '1' }),
+          HttpStatus.OK
+        );
       }
     } else {
       this.loggerService.error('传递的用户名错误');

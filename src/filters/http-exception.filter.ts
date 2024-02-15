@@ -9,6 +9,14 @@ import {
 
 import { formatDate } from '../utils';
 
+export enum ErrorShowType {
+  SILENT = 0,
+  WARN_MESSAGE = 1,
+  ERROR_MESSAGE = 2,
+  NOTIFICATION = 3,
+  REDIRECT = 9,
+}
+
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
@@ -20,19 +28,22 @@ export class HttpExceptionFilter implements ExceptionFilter {
     let resultMessage = exception.message;
     let resultCode = 1;
     let resultParams = {};
+    let showType = ErrorShowType.SILENT;
     try {
-      const { code, message, ...oth } = JSON.parse(exception.message);
+      const { code, message, showType: returnedShowType, ...oth } = JSON.parse(exception.message);
       resultMessage = message;
       resultCode = code;
       resultParams = oth;
+      showType = returnedShowType || ErrorShowType.SILENT;
     } catch (e) {}
     // const message = exception.message;
     Logger.log(exception, '错误提示');
     const errorResponse = {
       status,
-      message: resultMessage,
-      code: resultCode, // 自定义code
+      errorMessage: resultMessage,
+      errorCode: resultCode, // 自定义code
       params: resultParams,
+      showType: showType,
       path: request.url, // 错误的url地址
       method: request.method, // 请求方式
       timestamp: new Date().toLocaleDateString(), // 错误的时间
