@@ -1,23 +1,26 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Query } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { LoginService } from './login.service';
 import { LoginVo } from './vo/login.vo';
 import * as svgCaptcha from 'svg-captcha';
-import { HttpException } from '@nestjs/common/exceptions';
-import { HttpStatus } from '@nestjs/common/enums';
 
 @Controller()
 export class LoginController {
-  constructor(private readonly loginService: LoginService) {
-  }
+  constructor(private readonly loginService: LoginService) {}
 
   @Post('login')
   async loginApi(@Body() req: LoginDto): Promise<LoginVo> {
-    if (req.captcha.toLowerCase() === req.codeText.toLowerCase()) {
+    // if (req.captcha.toLowerCase() === req.codeText.toLowerCase()) {
+    try {
       return await this.loginService.loginApi(req);
-    } else {
-      throw new HttpException('验证码错误', HttpStatus.OK);
+    } catch (e: any) {
+      console.log('来这里了吗');
+      throw new HttpException(e.message, HttpStatus.OK);
     }
+
+    // } else {
+    //   throw new HttpException('验证码错误', HttpStatus.OK);
+    // }
   }
 
   @Get('refresh')
