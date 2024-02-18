@@ -17,9 +17,12 @@ export class BankDepositService {
     maxAmount?: number,
     startDate?: Date | null,
     endDate?: Date | null
-  ): Promise<BankDeposit[]> {
+  ): Promise<any> {
     console.log('ximen');
+    const pageSize = 10;
+    const pageNumber = 1;
     const query = this.bankDepositRepository.createQueryBuilder('deposit');
+
     if (bankName) {
       query.andWhere('deposit.bankName = :bankName', { bankName });
     }
@@ -38,8 +41,19 @@ export class BankDepositService {
     if (endDate) {
       query.andWhere('deposit.endDate <= :endDate', { endDate });
     }
-    console.log('嗷嗷叫: ');
-    return query.getMany();
+
+    const [bankList, totalCount] = await query
+      .skip((pageNumber - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('deposit.depositDate', 'DESC')
+      .getManyAndCount();
+
+    return {
+      data: bankList,
+      total: totalCount,
+      pageSize,
+      pageNumber,
+    };
   }
 
   /**
