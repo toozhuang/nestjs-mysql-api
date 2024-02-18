@@ -6,20 +6,16 @@ import { BankDepositService } from './bank-deposit.service';
 export class BankDepositController {
   constructor(private readonly bankDepositService: BankDepositService) {}
 
-  @Get('al')
-  async findAlla(){
-    return '嗷嗷叫'
-  }
-
   @Get()
   async findAll(
     @Query('bankName') bankName?: string,
     @Query('depositType') depositType?: string,
     @Query('minAmount') minAmount?: number,
     @Query('maxAmount') maxAmount?: number,
-    @Query('startDate') startDate?: Date,
-    @Query('endDate') endDate?: Date
+    @Query('startDate') startDate?: Date | null,
+    @Query('endDate') endDate?: Date | null
   ): Promise<BankDeposit[]> {
+    console.log('ximen, entry');
     return this.bankDepositService.findAll(
       bankName,
       depositType,

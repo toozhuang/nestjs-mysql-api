@@ -7,18 +7,18 @@ import { BankDeposit } from './entities/bank-deposit.entity';
 export class BankDepositService {
   constructor(
     @InjectRepository(BankDeposit)
-    private readonly bankDepositRepository: Repository<BankDeposit>,
-  ) {
-  }
+    private readonly bankDepositRepository: Repository<BankDeposit>
+  ) {}
 
   async findAll(
     bankName?: string,
     depositType?: string,
     minAmount?: number,
     maxAmount?: number,
-    startDate?: Date,
-    endDate?: Date,
+    startDate?: Date | null,
+    endDate?: Date | null
   ): Promise<BankDeposit[]> {
+    console.log('ximen');
     const query = this.bankDepositRepository.createQueryBuilder('deposit');
     if (bankName) {
       query.andWhere('deposit.bankName = :bankName', { bankName });
@@ -38,6 +38,7 @@ export class BankDepositService {
     if (endDate) {
       query.andWhere('deposit.endDate <= :endDate', { endDate });
     }
+    console.log('嗷嗷叫: ');
     return query.getMany();
   }
 
@@ -55,7 +56,7 @@ export class BankDepositService {
         throw new HttpException('到期时间必须晚于存款时间', HttpStatus.OK);
       }
       const days = Math.round(
-        (deposit.endDate.getTime() - deposit.depositDate.getTime()) / (1000 * 60 * 60 * 24),
+        (deposit.endDate.getTime() - deposit.depositDate.getTime()) / (1000 * 60 * 60 * 24)
       );
       deposit.term = days;
       deposit.maturityInterest = (deposit.amount * deposit.interestRate * days) / (365 * 100);
@@ -76,7 +77,7 @@ export class BankDepositService {
         throw new HttpException('到期时间必须晚于存款时间', HttpStatus.OK);
       }
       const days = Math.round(
-        (deposit.endDate.getTime() - deposit.depositDate.getTime()) / (1000 * 60 * 60 * 24),
+        (deposit.endDate.getTime() - deposit.depositDate.getTime()) / (1000 * 60 * 60 * 24)
       );
       deposit.term = days;
       deposit.maturityInterest = (deposit.amount * deposit.interestRate * days) / (365 * 100);

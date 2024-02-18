@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
+@Entity('bank_deposit')
 export class BankDeposit {
   @PrimaryGeneratedColumn({
     type: 'int',

@@ -5,12 +5,22 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ToshlService {
-  constructor(@InjectRepository(ToshlEntity)
-              private readonly toshEntity: Repository<ToshlEntity>) {
-  }
+  constructor(
+    @InjectRepository(ToshlEntity)
+    private readonly toshEntity: Repository<ToshlEntity>
+  ) {}
 
   async getToshlList(queryOption: any) {
-    const { account, category, tag, currency, startDate, endDate, pageSize=10, pageNumber =1 } = queryOption;
+    const {
+      account,
+      category,
+      tag,
+      currency,
+      startDate,
+      endDate,
+      pageSize = 10,
+      pageNumber = 1,
+    } = queryOption;
     const queryBuilder = this.toshEntity.createQueryBuilder('toshl');
 
     if (account) {
@@ -39,8 +49,8 @@ export class ToshlService {
       .getManyAndCount();
 
     return {
-      data:toshlList,
-      total:totalCount,
+      data: toshlList,
+      total: totalCount,
       pageSize,
       pageNumber,
     };
