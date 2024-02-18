@@ -41,6 +41,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const errorResponse = {
       status,
       errorMessage: resultMessage,
+      success: false,
       errorCode: resultCode, // 自定义code
       params: resultParams,
       showType: showType,

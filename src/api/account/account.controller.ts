@@ -24,6 +24,12 @@ import { AccountEntity } from './entities/account.entity';
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
+  // create a currentUser function
+  @Get('currentUser')
+  async createRoleApi(@CurrentUser('userInfo') currentInfo: ICurrentUserType) {
+    return currentInfo;
+  }
+
   @Post()
   async createAccountApi(
     @Body() req: AccountDto,
