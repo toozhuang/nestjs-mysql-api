@@ -15,6 +15,7 @@ import { getConfig } from './utils';
 import { ApiModule } from './api/api.module';
 import { SharedModule } from './shared/shared.module';
 import { PluginModule } from './plugin/plugin.module';
+import { AssetManagementModule } from '@src/api/asset-management/asset-management.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { PluginModule } from './plugin/plugin.module';
     ApiModule,
     SharedModule,
     PluginModule,
+    AssetManagementModule,
   ],
   providers: [
     Logger,

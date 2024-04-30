@@ -12,11 +12,11 @@ defaultPassword: 123456
 # 数据库配置
 datasource:
   driverName: mysql
-  host: localhost
+  host: toozhuang.helioho.st
   port: 3306
-  database: mysql
-  username: root
-  password: 123151
+  database: toozhuang_database
+  username: toozhuang_database
+  password: W%l53cw51
   charset: utf8mb4
   loc: Asia/Shanghai
   logging: true
